@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>旅行予算シミュレーター</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:sans-serif;
+}
+
+body{
+  background:#000;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+
+.card{
+  width:100%;
+  max-width:420px;
+  background:#111;
+  border:1px solid #222;
+  border-radius:30px;
+  padding:25px;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:5px;
+  color:#aaa;
+}
+
+select{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #333;
+  background:#1b1b1b;
+  color:white;
+}
+
+button{
+  width:100%;
+  margin-top:25px;
+  padding:15px;
+  background:white;
+  color:black;
+  font-weight:bold;
+  border:none;
+  border-radius:15px;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:25px;
+  padding:20px;
+  background:#181818;
+  border-radius:20px;
+  line-height:2;
+}
+
+.total{
+  font-size:28px;
+  font-weight:bold;
+  text-align:center;
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>冬旅行 どこ行く?</h1>
+
+<label>行き先</label>
+<select id="destination">
+  <option value="disney">ディズニー</option>
+  <option value="usj">ユニバ</option>
+  <option value="both">ディズニー＋ユニバ</option>
+  <option value="hokkaido">北海道</option>
+</select>
+
+<label>移動手段</label>
+<select id="transport">
+  <option value="6000">夜行バス</option>
+  <option value="22000">新幹線</option>
+</select>
+
+<label>宿泊</label>
+<select id="hotel">
+  <option value="0">日帰り</option>
+  <option value="6000">1泊2日</option>
+  <option value="12000">2泊3日</option>
+</select>
+
+<label>食費</label>
+<select id="food">
+  <option value="3000">3,000円</option>
+  <option value="5000">5,000円</option>
+  <option value="10000">10,000円</option>
+</select>
+
+<label>お土産代</label>
+<select id="souvenir">
+  <option value="0">なし</option>
+  <option value="5000">5,000円</option>
+  <option value="10000">10,000円</option>
+  <option value="20000">20,000円</option>
+</select>
+
+<button onclick="calculate()">
+予算を計算する
+</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+  const destination =
+    document.getElementById("destination").value;
+
+  const transport =
+    Number(document.getElementById("transport").value);
+
+  const hotel =
+    Number(document.getElementById("hotel").value);
+
+  const food =
+    Number(document.getElementById("food").value);
+
+  const souvenir =
+    Number(document.getElementById("souvenir").value);
+
+  let ticket = 0;
+  let title = "";
+
+  if(destination === "disney"){
+    title = "ディズニー";
+    ticket = 9800;
+  }
+
+  if(destination === "usj"){
+    title = "USJ";
+    ticket = 12000;
+  }
+
+  if(destination === "both"){
+    title = "ディズニー＋USJ";
+    ticket = 9800＋12000;
+  }
+
+  if(destination === "hokkaido"){
+    title = "北海道";
+    ticket = 0;
+  }
+
+  const total =
+    transport +
+    hotel +
+    ticket +
+    food +
+    souvenir;
+
+  document.getElementById("result").innerHTML = `
+  
+  <div class="result">
+  
+    <h2>${title}</h2>
+
+    <p>交通費：¥${transport.toLocaleString()}</p>
+    <p>宿泊費：¥${hotel.toLocaleString()}</p>
+    <p>チケット代：¥${ticket.toLocaleString()}</p>
+    <p>食費：¥${food.toLocaleString()}</p>
+    <p>お土産代：¥${souvenir.toLocaleString()}</p>
+
+    <hr style="margin:15px 0;border-color:#333;">
+
+    <div class="total">
+      ¥${total.toLocaleString()}
+    </div>
+
+  </div>
+  `;
+}
+
+</script>
+
+</body>
+</html>
